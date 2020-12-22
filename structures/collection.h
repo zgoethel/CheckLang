@@ -10,12 +10,12 @@ template <typename E>
 class iterator
 {
     /**
-     * @returns Whether the iterable object has a next element
+     * @return Whether the iterable object has a next element
      */
     bool has_next();
 
     /**
-     * @returns The next element in the sequence, or nothing if there isn't one
+     * @return The next element in the sequence, or nothing if there isn't one
      */
     std::shared_ptr<E> get_next();
 };
@@ -28,7 +28,7 @@ class iterable
 {
 private:
     /**
-     * @returns An iterator which can be used to iterate over this sequence
+     * @return An iterator which can be used to iterate over this sequence
      */
     std::shared_ptr<iterator<E>> create_iterator();
 
@@ -57,14 +57,14 @@ template <typename E>
 class collection : public iterable<E>
 {
     /**
-     * @returns The number of elements contained in the collection
+     * @return The number of elements contained in the collection
      */
     int get_size();
     
     /**
      * @param element Element to search for in the collection
      * 
-     * @returns Whether the given element exists anywhere in the collection
+     * @return Whether the given element exists anywhere in the collection
      */
     bool contains(std::shared_ptr<E> element);
     
@@ -105,6 +105,15 @@ class list : public set<E>
      * @param element Element to place in the list at the given index
      */
     void set(int index, std::shared_ptr<E> element);
+
+    /**
+     * Inserts the element at the given index, or appends it if at the end;
+     * moves all elements to the right up one index
+     * 
+     * @param index Index at which to insert the element
+     * @param element Element to insert in the list at the given index
+     */
+    void insert(int index, std::shared_ptr<E> element);
 
     /**
      * @param index Index in the list to retrieve

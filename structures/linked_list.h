@@ -66,37 +66,107 @@ public:
     }
 
     //TODO Equals comparison
-    //TODO
     bool remove(std::shared_ptr<E> element)
     {
+        auto current = &head;
+
+        for (int i = 0; i < size; i++)
+        {
+            if (current->element == element)
+            {
+                current->prev->next = current->next;
+                current->next->prev = current->prev;
+
+                delete current;
+
+                size--;
+
+                return true;
+            }
+
+            current = current->next;
+        }
 
         return false;
     }
 
-    //TODO
     void add(std::shared_ptr<E> element)
     {
+        auto node = new linked_list_node { element, tail, tail->prev };
 
+        tail->prev->next = node;
+        tail->prev = node;
+
+        size++;
     }
 
-    //TODO
+    void insert(int index, std::shared_ptr<E> element)
+    {
+        if (index < 0 || index > size)
+            throw std::exception("Index out of bounds");
+
+        auto current = &head;
+
+        for (int i = 0; i < index; i++)
+            current = current->next;
+            
+        auto node = new linked_list_node { element, current->next, current };
+
+        current->next->prev = node;
+        current->next = node;
+
+        size++;
+    }
+
     void set(int index, std::shared_ptr<E> element)
     {
-        
+        if (index < 0 || index >= size)
+            throw std::exception("Index out of bounds");
+
+        auto current = &head;
+
+        for (int i = 0; i < index; i++)
+            current = current->next;
+            
+        auto node = new linked_list_node { element, current->next, current };
+
+        current->next->element = element;
     }
 
-    //TODO
     std::shared_ptr<E> get(int index)
     {
+        if (index < 0 || index >= size)
+            throw std::exception("Index out of bounds");
 
-        return std::shared_ptr<E>(nullptr);
+        auto current = &head;
+
+        for (int i = 0; i < index; i++)
+            current = current->next;
+
+        return current->next->element;
     }
 
-    //TODO
     std::shared_ptr<E> remove(int index)
     {
-        
-        return std::shared_ptr<E>(nullptr);
+        if (index < 0 || index >= size)
+            throw std::exception("Index out of bounds");
+
+        auto current = &head;
+
+        for (int i = 0; i < index; i++)
+            current = current->next;
+
+        auto result = current->next->element;
+        auto delete_reference = current->next;
+
+        current->next->prev = current;
+        current->next = current->next->next;
+
+        delete delete_reference;
+
+        size--;
+
+        return result;
     }
 
     friend class linked_list_iterator<E>;
@@ -125,7 +195,7 @@ public:
     {
         if (!this->has_next())
             return std::shared_ptr<E>(nullptr);
-            
+
         this->current = this->current->next;
 
         return this->current->element;
