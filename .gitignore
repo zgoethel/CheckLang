@@ -1,0 +1,22 @@
+# =============================
+# Primary project ignored files
+# =============================
+
+# Visual Studio project files and compilation output
+/out/**
+/.vs/**
+
+/CMakeSettings.json
+
+# VSCode-related project files and compilation output
+/build/**
+/.vscode/**
+
+# Any misc. compiled libraries or executable files
+**/*.exe
+**/*.dll
+**/*.lib
+# Linux platform-related compiled output files
+**/*.out
+**/*.a
+**/*.so
