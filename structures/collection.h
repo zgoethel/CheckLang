@@ -85,7 +85,7 @@ template <typename E>
 class set : public collection<E>
 {
     /**
-     * Adds the given element to the set
+     * Adds or appends the given element to the set
      * 
      * @param element Element to add
      */
